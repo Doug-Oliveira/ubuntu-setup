@@ -42,6 +42,21 @@ sudo -u postgres psql
 sudo -u postgres createuser chris -s
 sudo -u postgres psql
 \password dev
+
+sudo su
+cd /etc/postgresql
+cd 9.6/main
+sudo nano pg_hba.conf
+- trocar de peer para trust
+sudo nano postgresql.conf
+
+- descomentar listen_addresses e deixar igual abaixo.
+listen_addresses = '0.0.0.0'
+
+service postgresql restart
+#abaixo precisa estar running
+service postgresql status
+
 ```
 Projeto Pitzi
 
