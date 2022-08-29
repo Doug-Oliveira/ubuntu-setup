@@ -57,5 +57,40 @@ service postgresql restart
 service postgresql status
 
 ```
+```bash
+echo "Instalando Redis 3.2"
+adduser --system --group --no-create-home redis
+mv arquivos/redis/redis-3.2.9.tar.gz /tmp
+cd /tmp
+tar xzvf redis-3.2.9.tar.gz
+cd /tmp/redis-3.2.9
+make
+make test
+sudo make install
+cd
+mkdir /etc/redis
+mv arquivos/redis/redis.conf /etc/redis
+cat << EOF > /etc/systemd/system/redis.service
+  [Unit]
+  Description=Redis In-Memory Data Store
+  After=network.target
+  [Service]
+  User=redis
+  Group=redis
+  ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf
+  ExecStop=/usr/local/bin/redis-cli shutdown
+  Restart=always
+  [Install]
+  WantedBy=multi-user.target
+EOF
+mkdir /var/lib/redis
+chown redis:redis /var/lib/redis
+chmod 770 /var/lib/redis
+systemctl start redis
+systemctl enable redis
+```
+
+
+
 Projeto Pitzi
 
