@@ -37,8 +37,7 @@ echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main"
 sudo apt-get update -y
 sudo apt install postgresql-9.6 postgresql-client-9.6
 
-sudo -u postgres psql
-
+#tem que criar o user fora do psql
 sudo -u postgres createuser chris -s
 sudo -u postgres psql
 \password dev
